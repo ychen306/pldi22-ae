@@ -1,6 +1,7 @@
 # Numbers to reproduce
-This artifact is for reproducing the numbers from Figure 13 (TSVC), Figure 15 (PolyBench), and Figure 16 (ISPC).
+This artifact is for reproducing the numbers from Figure 13 (TSVC), Figure 14 (a motivating kernel from TSVC), Figure 15 (PolyBench), and Figure 16 (ISPC).
 On my mac, the geomean over LLVM on TSVC is 0.996.
+The kernel from Figure 14 (from TSVC's s275) should be between 2.0x and 3.0x (depends on your machine).
 On PolyBench it's 1.3x over LLVM.
 On ISPC the geoman speedup is 2.0x over LLVM.
 
@@ -29,6 +30,7 @@ To compare the results, use the following command
 ```bash
 python3 get-tsvc-speedup.py tsvc-llvm.txt tsvc-vegen.txt
 ```
+The script shows you the geomean and the individual speedup for the different kernels. The kernel in Figure 14 comes from kernel s275.
 
 Do the following if you want to rerun the benchmarks.
 ```bash
