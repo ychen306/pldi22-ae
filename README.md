@@ -20,7 +20,7 @@ docker run -it vegen-pldi22-ae /bin/bash
 ```
 
 ## TSVC 
-If you build the docker image from scratch on your machine TSVC should be automatically benchmarked
+If you build the docker image from scratch on your machine, TSVC should be automatically benchmarked
 and the results in `/tsvc-vegen.txt` and `/tsvc-llvm.txt`.
 To compare the results, use the following command
 ```bash
