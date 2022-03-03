@@ -1,9 +1,12 @@
+# Outline 
+Download and extract the tar ball from Zenodo and follow the instructions specified here.
+
 # Numbers to reproduce
 This artifact is for reproducing the numbers from Figure 13 (TSVC), Figure 14 (a motivating kernel from TSVC), Figure 15 (PolyBench), and Figure 16 (ISPC).
 On my mac, the geomean over LLVM on TSVC is 0.996.
 The kernel from Figure 14 (from TSVC's s275) should be between 2.0x and 3.0x (depends on your machine).
-On PolyBench it's 1.3x over LLVM.
-On ISPC the geoman speedup is 2.0x over LLVM.
+On PolyBench it's 1.36x over LLVM.
+On ISPC the geoman speedup is 1.47x over LLVM.
 
 # Dependences
 You need docker and a machine with AVX-512.
