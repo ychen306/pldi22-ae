@@ -55,9 +55,8 @@ python3 get-tsvc-speedup.py tsvc-llvm.txt tsvc-vegen.txt
 
 ## PolyBench
 The docker build should automatically run the benchmarks for you and dump the results to `/polybench-vegen.csv` (our results),
-`/polybench-llvm.csv` (results from using LLVM's vectorizer), and `/polybench-scalar.csv` (results from using LLVM `-O3` without vectorization).
-Use the script `/get-polybench-speedup.py` to compare the numbers.
-For example, the following command shows the speedup of our vectorizer (vegen) over llvm's vectorizer.
+`/polybench-llvm.csv` (results from using LLVM's vectorizer).
+Use the following command to get the speedup.
 ```
 cd /
 python3 get-polybench-speedup.py polybench-llvm.csv polybench-vegen.csv
