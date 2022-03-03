@@ -67,7 +67,6 @@ Do the following if you want to rerun the benchmarks.
 cd /
 python3 run-polybench.py polybench-vegen polybench-vegen.csv
 python3 run-polybench.py polybench-llvm polybench-llvm.csv
-python3 run-polybench.py polybench-scalar polybench-scalar.csv
 ```
 
 # ISPC
