@@ -1,9 +1,15 @@
+# Numbers to reproduce
+This artifact is for reproducing the numbers from Figure 13 (TSVC), Figure 15 (PolyBench), and Figure 16 (ISPC).
+On my mac, the geomean over LLVM on TSVC is 0.996.
+On PolyBench it's 1.3x over LLVM.
+On ISPC the geoman speedup is 2.0x over LLVM.
+
 # Dependences
 You need docker and a machine with AVX-512.
 
 # Build instruction
 You should be able to run `docker build -t vegen-pldi22-ae .` to build everything from source.
-In the docker file is use `make -j72` to build llvm from source, and you may want to adjust the level of build parallelism to suit your CPU.
+In the docker file, I use `make -j72` to build LLVM from source, and you may want to adjust the level of build parallelism to suit your CPU.
 Because the docker build also runs some of the benchmark automatically for you, please don't run other
 stuff in the background (so that the measurements are not affected).
 
@@ -42,7 +48,7 @@ cd /
 python3 get-tsvc-speedup.py tsvc-llvm.txt tsvc-vegen.txt
 ```
 
-## polybench
+## PolyBench
 The docker build should automatically run the benchmarks for you and dump the results to `/polybench-vegen.csv` (our results),
 `/polybench-llvm.csv` (results from using LLVM's vectorizer), and `/polybench-scalar.csv` (results from using LLVM `-O3` without vectorization).
 Use the script `/get-polybench-speedup.py` to compare the numbers.
