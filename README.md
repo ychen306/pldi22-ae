@@ -8,7 +8,10 @@ On ISPC the geoman speedup is 2.0x over LLVM.
 You need docker and a machine with AVX-512.
 
 # Build instruction
-You should be able to run `docker build -t vegen-pldi22-ae .` to build everything from source.
+Run the following command to build everything from source.
+```bash
+docker build -t vegen-pldi22-ae .
+```
 In the docker file, I use `make -j72` to build LLVM from source, and you may want to adjust the level of build parallelism to suit your CPU.
 Because the docker build also runs some of the benchmark automatically for you, please don't run other
 stuff in the background (so that the measurements are not affected).
