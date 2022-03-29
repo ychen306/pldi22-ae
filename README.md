@@ -1,8 +1,6 @@
 # Outline 
-Download and extract the tar ball from Zenodo and follow the instructions specified here.
-
-# Numbers to reproduce
 This artifact is for reproducing the numbers from Figure 13 (TSVC), Figure 14 (a motivating kernel from TSVC), Figure 15 (PolyBench), and Figure 16 (ISPC).
+On all figures, the y-axis indicate speedup (higher is better).
 On my mac, the geomean over LLVM on TSVC is 0.996.
 The kernel from Figure 14 (from TSVC's s275) should be between 2.0x and 3.0x (depends on your machine).
 On PolyBench it's 1.36x over LLVM.
@@ -26,7 +24,7 @@ Once you've build the docker image, enter interactive mode the following command
 docker run -it vegen-pldi22-ae /bin/bash
 ```
 
-## TSVC 
+## TSVC (Figure 13)
 If you build the docker image from scratch on your machine, TSVC should be automatically benchmarked
 and the results in `/tsvc-vegen.txt` and `/tsvc-llvm.txt`.
 To compare the results, use the following command
@@ -56,7 +54,7 @@ cd /
 python3 get-tsvc-speedup.py tsvc-llvm.txt tsvc-vegen.txt
 ```
 
-## PolyBench
+## PolyBench (Figure 15)
 The docker build should automatically run the benchmarks for you and dump the results to `/polybench-vegen.csv` (our results),
 `/polybench-llvm.csv` (results from using LLVM's vectorizer).
 Use the following command to get the speedup.
@@ -70,9 +68,11 @@ Do the following if you want to rerun the benchmarks.
 cd /
 python3 run-polybench.py polybench-vegen polybench-vegen.csv
 python3 run-polybench.py polybench-llvm polybench-llvm.csv
+# Get the speedup
+python3 get-polybench-speedup.py polybench-llvm.csv polybench-vegen.csv
 ```
 
-# ISPC
+# ISPC (Figure 16)
 Because there are only six ISPC benchmarks, I don't have a script. Just do the following to get the numbers.
 ```bash
 cd /ispc-bench

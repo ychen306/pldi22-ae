@@ -1,30 +1,9 @@
-from clangbuiltlinux/ubuntu:llvm12-latest
+# import the baseimage*, which contains a copy of LLVM 12.0.1 (pre)built from source 
+# * https://hub.docker.com/layers/clang/dsrcl/clang/pldi22-ae/images/sha256-c73481c08d09d5942ddc31e3656104055eadc4b92c4466081983734820e8cf31?context=explore
+from dsrcl/clang:pldi22-ae
 
-ENV CC /bin/clang-12
-ENV CXX /bin/clang++-12
-
-RUN apt-get update && apt-get install -y cmake
-
-RUN curl -L https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/llvm-project-12.0.1.src.tar.xz -o llvm-project.tar.gz
- 
-RUN tar -xvf llvm-project.tar.gz
-
-RUN apt-get install -y python3
-
-# build llvm from source 
-WORKDIR llvm-project-12.0.1.src
-RUN mkdir build
-WORKDIR build
-RUN cmake -DLLVM_ENABLE_PROJECTS='clang'\
-  -DLLVM_TARGETS_TO_BUILD=X86\
-  -DCMAKE_BUILD_TYPE=Release\
-  -DLLVM_ENABLE_ASSERTIONS=On\
-  -DLLVM_ENABLE_TERMINFO=OFF\
-  ../llvm && make -j72
-
-RUN make install
-
-# build the vectorizer
+# Build the vectorizer
+# This should take about 2 minutes on an 8-core machine and no longer than 10 minutes on a single core.
 WORKDIR /
 RUN git clone https://github.com/ychen306/vegen
 RUN mkdir vegen/build
@@ -62,7 +41,9 @@ RUN curl -L https://sourceforge.net/projects/polybench/files/polybench-c-4.2.tar
       echo CFLAGS=-O3 -ffast-math -march=native -fno-vectorize -fno-slp-vectorize -DPOLYBENCH_TIME -DPOLYBENCH_USE_RESTRICT >>polybench-scalar/config.mk &&\
       echo CC=clang >>polybench-scalar/config.mk
 
-# optimize and run polybench
+# Optimize and run polybench.
+# The following three steps runs our vectorizer, LLVm's vectorizers, and LLVM's -O3 without vectorization repsectively.
+# Each step should take around 5 to 6 minutes.
 RUN python3 run-polybench.py polybench-vegen polybench-vegen.csv
 RUN python3 run-polybench.py polybench-llvm polybench-llvm.csv
 RUN python3 run-polybench.py polybench-scalar polybench-scalar.csv
@@ -78,15 +59,22 @@ RUN python3 get-polybench-speedup.py polybench-scalar.csv polybench-vegen.csv
 COPY tsvc tsvc-vegen
 COPY tsvc tsvc-llvm
 WORKDIR /tsvc-vegen
+# Optimize with our vectorizer. Should take about 30 seconds
 RUN CC=vegen-clang make
 WORKDIR /tsvc-llvm
+# Optimize with LLVM's vectorizers. Should take about 30 seconds 
 RUN CC=clang make
 
 # run TSVC
 WORKDIR /
+# Run TSVC optimized with our vectorizer. Should take about 3 minutes for each step.
 RUN /tsvc-vegen/runvec > tsvc-vegen.txt
 RUN /tsvc-llvm/runvec > tsvc-llvm.txt
 
 # get the speedup
 COPY get-tsvc-speedup.py /get-tsvc-speedup.py
 RUN python3 get-tsvc-speedup.py tsvc-llvm.txt tsvc-vegen.txt
+
+# run ISPC benchmarks
+COPY run-ispc.py /run-ispc.py
+RUN python3 run-ispc.py ispc-bench
