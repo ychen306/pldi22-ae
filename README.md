@@ -33,7 +33,7 @@ python3 get-tsvc-speedup.py tsvc-llvm.txt tsvc-vegen.txt
 ```
 The script shows you the geomean and the individual speedup for the different kernels. The kernel in Figure 14 comes from kernel s275.
 
-Do the following if you want to rerun the benchmarks.
+Do the following if you want to rerun the benchmarks and calculate the speedup; this should take about 10 minutes.
 ```bash
 # optimize tsvc with our vectorizer (vegen)
 cd /tsvc-vegen
@@ -63,7 +63,7 @@ cd /
 python3 get-polybench-speedup.py polybench-llvm.csv polybench-vegen.csv
 ```
 
-Do the following if you want to rerun the benchmarks.
+Do the following if you want to rerun the benchmarks, which should take about 15 minutes.
 ```bash
 cd /
 python3 run-polybench.py polybench-vegen polybench-vegen.csv
@@ -73,19 +73,8 @@ python3 get-polybench-speedup.py polybench-llvm.csv polybench-vegen.csv
 ```
 
 # ISPC (Figure 16)
-Because there are only six ISPC benchmarks, I don't have a script. Just do the following to get the numbers.
-```bash
-cd /ispc-bench
-# aobench
-make run-ao
-# ray tracker
-make run-rt
-# binomial options *and* black scholes (they are bundled together)
-make run-options
-# stencil
-make run-stencil
-# mandelbrot
-make run-mandelbrot
-# volume
-make run-volume
+Run the following script to build and run the ISPC benchmarks (the script also reports speedup).
+This step should take about 20 seconds.
+```
+python3 run-ispc.py ispc-bench
 ```

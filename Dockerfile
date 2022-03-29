@@ -62,7 +62,7 @@ WORKDIR /tsvc-vegen
 # Optimize with our vectorizer. Should take about 30 seconds
 RUN CC=vegen-clang make
 WORKDIR /tsvc-llvm
-# Optimize with LLVM's vectorizers. Should take about 30 seconds 
+# Optimize with LLVM's vectorizers. Should take about 5 seconds 
 RUN CC=clang make
 
 # run TSVC
