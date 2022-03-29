@@ -1,0 +1,8 @@
+aobench serial : 0.9572945480503257
+rt serial : 0.9266246243609348
+binomial serial : 0.918662602457483
+black-scholes serial : 1.0018129626831849
+stencil serial : 0.8567987589608385
+mandelbrot serial : 8.934831390637662
+volume serial : 3.0312756286641562
+GeoMean: 1.5222904822823962
